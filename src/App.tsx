@@ -16,6 +16,7 @@ import { CybersecuritySection } from './sections/CybersecuritySection';
 import { JourneySection } from './sections/JourneySection';
 import { CertificatesSection } from './sections/CertificatesSection';
 import { ExploringSection } from './sections/ExploringSection';
+import { CreativeCompanionsSection } from './sections/CreativeCompanionsSection';
 import { ContactSection } from './sections/ContactSection';
 import { Footer } from './sections/Footer';
 import { CaseStudyModal } from './components/CaseStudyModal';
@@ -158,6 +159,11 @@ export default function App() {
         {/* Currently Exploring / Radar */}
         <SectionReveal>
           <ExploringSection />
+        </SectionReveal>
+
+        {/* My Creative Companions | Network & Friends */}
+        <SectionReveal>
+          <CreativeCompanionsSection />
         </SectionReveal>
 
         {/* Direct Contact & Collaboration Form */}

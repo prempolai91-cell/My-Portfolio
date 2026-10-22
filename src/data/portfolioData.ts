@@ -1,4 +1,4 @@
-import { Project, UIUXItem, SkillCategory, TimelineEntry, SecurityConcept, Certificate } from '../types/portfolio';
+import { Project, UIUXItem, SkillCategory, TimelineEntry, SecurityConcept, Certificate, CreativeCompanion } from '../types/portfolio';
 
 export const PERSONAL_BRAND = {
   name: 'PREM POLAI',
@@ -666,6 +666,56 @@ export const CERTIFICATES: Certificate[] = [
     badgeType: 'participation',
     accentColor: 'rose'
   }
+];
+
+/**
+ * =========================================================================
+ * MY CREATIVE COMPANIONS |
+ * Set your friends' name, about, and photo here!
+ *
+ * HOW TO EDIT:
+ * - Change 'name' to your friend's name.
+ * - Change 'role' to their craft / profession / title.
+ * - Change 'about' to a bio, note, or story about your friendship & work.
+ * - Change 'photoUrl' to their photo URL or image path.
+ * - Optional: customize 'accentColor' ('rose' | 'emerald' | 'cyan' | 'amber' | 'violet'),
+ *   'tags', 'collabHighlight', and 'socialLinks'.
+ * =========================================================================
+ */
+export const CREATIVE_COMPANIONS: CreativeCompanion[] = [
+  {
+    id: 'companion-raghab-barik',
+    name: 'Raghab Barik',
+    role: 'Full-Stack Web Developer & UI/UX Designer',
+    about: 'Full-stack web developer and UI/UX designer currently pursuing B.Tech at Nalanda Institute of Technology, Bhubaneswar. Working with Stoup as a website developer, passionate about crafting modern digital experiences with clean design, powerful full-stack architecture, and user-centric workflows.',
+    photoUrl: 'https://avatars.githubusercontent.com/u/187761572?v=4',
+    accentColor: 'cyan',
+    tags: ['React', 'Next.js', 'UI/UX Design', 'Tailwind CSS', 'TypeScript', 'Full-Stack'],
+    collabHighlight: 'Website Developer at Stoup & Creative Peer',
+    location: 'Bhubaneswar, Odisha',
+    socialLinks: [
+      { platform: 'Website', url: 'https://www.raghabportfolio.in/' },
+      { platform: 'GitHub', url: 'https://github.com/Raghabbarik' },
+      { platform: 'LinkedIn', url: 'https://www.linkedin.com/in/raghab-barik-b44692337' },
+      { platform: 'Instagram', url: 'https://www.instagram.com/mr_raghab_786' },
+      { platform: 'Email', url: 'mailto:rraghabbarik@gmail.com' },
+    ],
+  },
+  {
+    id: 'companion-chandra-kanta-khilar',
+    name: 'Chandra Kanta Khilar',
+    role: 'Software Developer, Video Editor & Graphic Designer',
+    about: 'B.Tech Computer Science & Engineering student at Nalanda Institute of Technology, Bhubaneswar (2024–2028). Passionate about turning ideas into code, cinematic visuals, and impactful graphic design—bridging software logic with creative storytelling, motion graphics, and video editing.',
+    photoUrl: 'https://i.postimg.cc/NMJ8MkL9/Whats-App-Image-2026-08-31-at-23-47-51.jpg',
+    accentColor: 'violet',
+    tags: ['Video Editing', 'Graphic Design', 'Web Dev', 'Motion Graphics', 'Premiere Pro', 'After Effects'],
+    collabHighlight: 'Creative Peer & Multimedia Collaborator',
+    location: 'Bhubaneswar, Odisha',
+    socialLinks: [
+      { platform: 'Website', url: 'https://chandra-kanta-portfolio.vercel.app/' },
+      { platform: 'Email', url: 'mailto:cchandrakantakhilar@gmail.com' },
+    ],
+  },
 ];
 
 

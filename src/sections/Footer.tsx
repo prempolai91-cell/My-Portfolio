@@ -59,6 +59,12 @@ export const Footer: React.FC = () => {
               CERTIFICATES
             </button>
             <button
+              onClick={() => scrollToSection('companions')}
+              className="text-zinc-400 hover:text-white transition-colors"
+            >
+              COMPANIONS
+            </button>
+            <button
               onClick={() => scrollToSection('contact')}
               className="text-zinc-400 hover:text-white transition-colors"
             >

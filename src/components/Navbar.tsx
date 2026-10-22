@@ -17,7 +17,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onTalkClick }) => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
 
-      const sections = ['work', 'about', 'skills', 'security', 'journey', 'certificates', 'contact'];
+      const sections = ['work', 'about', 'skills', 'security', 'journey', 'certificates', 'companions', 'contact'];
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
@@ -55,6 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onTalkClick }) => {
     { label: 'SECURITY', target: 'security' },
     { label: 'JOURNEY', target: 'journey' },
     { label: 'CERTS', target: 'certificates' },
+    { label: 'COMPANIONS', target: 'companions' },
     { label: 'CONTACT', target: 'contact' },
   ];
 

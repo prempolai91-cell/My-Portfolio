@@ -105,3 +105,23 @@ export interface Certificate {
   badgeType: 'verified' | 'specialization' | 'professional' | 'participation' | 'internship';
   accentColor: 'rose' | 'emerald' | 'cyan' | 'amber';
 }
+
+export type CompanionSocialPlatform = 'GitHub' | 'LinkedIn' | 'Instagram' | 'Twitter' | 'Website' | 'Email';
+
+export interface CompanionSocial {
+  platform: CompanionSocialPlatform;
+  url: string;
+}
+
+export interface CreativeCompanion {
+  id: string;
+  name: string;
+  role: string;
+  about: string;
+  photoUrl: string;
+  accentColor?: 'rose' | 'emerald' | 'cyan' | 'amber' | 'violet';
+  tags?: string[];
+  socialLinks?: CompanionSocial[];
+  collabHighlight?: string;
+  location?: string;
+}
