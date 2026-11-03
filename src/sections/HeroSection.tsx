@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, Terminal, Shield, Code, Sparkles, Clock } from 'lucide-react';
+import React from 'react';
+import { ArrowDown, ArrowRight, Code2, ShieldCheck, Sparkles } from 'lucide-react';
 import { HeroPortraitVisual } from '../components/visuals/HeroPortraitVisual';
-import { ParticleCanvas } from '../components/visuals/ParticleCanvas';
 import { MagneticButton } from '../components/motion/MagneticButton';
 import { soundManager } from '../lib/audio';
 
@@ -10,147 +9,100 @@ interface HeroSectionProps {
   onConnect: () => void;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onViewWork, onConnect }) => {
-  const [timeStr, setTimeStr] = useState<string>('');
+const specialties = [
+  { label: 'Development', icon: Code2 },
+  { label: 'Product design', icon: Sparkles },
+  { label: 'Security', icon: ShieldCheck },
+];
 
-  useEffect(() => {
-    const update = () => {
-      const d = new Date();
-      setTimeStr(
-        d.toLocaleTimeString('en-US', {
-          timeZone: 'UTC',
-          hour12: false,
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-        }) + ' UTC'
-      );
-    };
-    update();
-    const interval = setInterval(update, 1000);
-    return () => clearInterval(interval);
-  }, []);
+export const HeroSection: React.FC<HeroSectionProps> = ({ onViewWork, onConnect }) => (
+  <section
+    id="hero"
+    className="relative isolate flex min-h-[92vh] items-center overflow-hidden px-6 pb-20 pt-28 sm:px-10 lg:px-16"
+  >
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div className="absolute -left-40 top-10 h-[28rem] w-[28rem] rounded-full bg-rose-950/25 blur-[130px]" />
+      <div className="absolute -right-32 bottom-0 h-[24rem] w-[24rem] rounded-full bg-orange-950/15 blur-[120px]" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    </div>
 
-  return (
-    <section
-      id="hero"
-      className="relative min-h-[96vh] flex items-center justify-center pt-28 pb-20 px-6 md:px-12 lg:px-16 overflow-hidden"
-    >
-      {/* Interactive Cyber Particle Network Canvas */}
-      <ParticleCanvas />
+    <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-10">
+      <div className="relative z-10 space-y-8 lg:col-span-7">
+        <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.035] px-4 py-2 text-[11px] font-mono uppercase tracking-[0.18em] text-zinc-300 backdrop-blur">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/70" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+          </span>
+          <span>Independent developer &amp; designer</span>
+          <span className="hidden text-zinc-600 sm:inline">/</span>
+          <span className="hidden text-zinc-400 sm:inline">Bhubaneswar, India</span>
+        </div>
 
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-rose-950/25 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute top-1/2 right-10 w-[450px] h-[450px] bg-red-950/20 rounded-full blur-[140px] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
-        {/* Left Column: Bold Editorial Typography */}
-        <div className="lg:col-span-7 space-y-6 md:space-y-8 z-10">
-          {/* Small label with live clock */}
-          <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-white/10 text-xs font-mono text-zinc-300 backdrop-blur-md shadow-lg shadow-black/40">
-            <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-            <span className="tracking-widest uppercase">HELLO, I&apos;M PREM POLAI</span>
-            {timeStr && (
-              <>
-                <span className="text-zinc-600">&bull;</span>
-                <span className="text-zinc-400 flex items-center gap-1 font-mono text-[11px]">
-                  <Clock className="w-3 h-3 text-rose-400" />
-                  {timeStr}
-                </span>
-              </>
-            )}
-          </div>
-
-          {/* Main heading */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-extrabold tracking-tight text-white leading-[1.05]">
-            I BUILD <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-rose-500 to-red-600 drop-shadow-sm">
-              DIGITAL
-            </span>{' '}
+        <div className="space-y-5">
+          <p className="text-sm font-mono tracking-[0.22em] text-rose-300">HELLO, I&apos;M PREM POLAI</p>
+          <h1 className="max-w-4xl text-5xl font-display font-semibold leading-[0.98] tracking-[-0.055em] text-white sm:text-6xl md:text-7xl xl:text-[5.8rem]">
+            Thoughtful tech.
             <br />
-            <span className="italic font-light text-zinc-200">EXPERIENCES.</span>
+            <span className="bg-gradient-to-r from-rose-300 via-rose-400 to-orange-300 bg-clip-text text-transparent">
+              Real-world impact.
+            </span>
           </h1>
-
-          {/* Professional identity lockup */}
-          <div className="space-y-2">
-            <p className="text-sm md:text-base font-mono tracking-wider text-rose-400 font-semibold uppercase">
-              Web &amp; App Developer &bull; UI/UX Designer &bull; Cybersecurity Enthusiast
-            </p>
-            <p className="text-base md:text-lg text-zinc-400 font-normal leading-relaxed max-w-xl">
-              I transform ideas into beautiful, functional and secure digital products. Where design, development, and cybersecurity come together.
-            </p>
-          </div>
-
-          {/* CTA Buttons with Magnetic Spring Interaction */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <MagneticButton strength={0.28}>
-              <button
-                onClick={() => {
-                  soundManager.playClick();
-                  onViewWork();
-                }}
-                onMouseEnter={() => soundManager.playHover()}
-                className="group flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-mono text-xs font-bold tracking-widest uppercase transition-all duration-200 shadow-xl shadow-rose-950/60 border border-rose-500/50"
-              >
-                <span>VIEW MY WORK</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </MagneticButton>
-
-            <MagneticButton strength={0.25}>
-              <button
-                onClick={() => {
-                  soundManager.playClick();
-                  onConnect();
-                }}
-                onMouseEnter={() => soundManager.playHover()}
-                className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 text-zinc-200 hover:text-white font-mono text-xs font-semibold tracking-widest uppercase border border-white/10 hover:border-rose-500/40 transition-all duration-200 backdrop-blur-md"
-              >
-                <span>LET&apos;S CONNECT</span>
-              </button>
-            </MagneticButton>
-          </div>
-
-          {/* Subtle Cyber Status Telemetry */}
-          <div className="pt-6 border-t border-white/5 flex flex-wrap items-center gap-6 text-xs font-mono text-zinc-500">
-            <div className="flex items-center gap-2">
-              <span className="text-zinc-400 font-bold">IDENTITY:</span>
-              <span>Code &times; Design &times; Security</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Terminal className="w-3.5 h-3.5 text-rose-500" />
-              <span className="text-zinc-400">STATUS:</span>
-              <span className="text-emerald-400">Available For Opportunities</span>
-            </div>
-          </div>
+          <p className="max-w-2xl text-base leading-7 text-zinc-400 sm:text-lg sm:leading-8">
+            I design and build digital products with a focus on useful experiences, clean engineering, and security from day one.
+          </p>
         </div>
 
-        {/* Right Column: Large Interactive Workstation Visual with Floating Orbital Badges */}
-        <div className="lg:col-span-5 relative z-10 w-full flex justify-center">
-          <div className="relative w-full">
-            {/* Floating Orbital Tag: CODE */}
-            <div className="hidden sm:flex absolute -top-5 -left-6 z-20 items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900/90 border border-white/10 shadow-xl text-[11px] font-mono text-rose-400 backdrop-blur-md animate-float-slow">
-              <Code className="w-3 h-3 text-rose-400" />
-              <span>&lt;/CODE&gt;</span>
-            </div>
-
-            {/* Floating Orbital Tag: DESIGN */}
-            <div className="hidden sm:flex absolute -bottom-5 -left-4 z-20 items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900/90 border border-white/10 shadow-xl text-[11px] font-mono text-amber-400 backdrop-blur-md animate-float-delayed">
-              <Sparkles className="w-3 h-3 text-amber-400" />
-              <span>&lt;DESIGN&gt;</span>
-            </div>
-
-            {/* Floating Orbital Tag: SECURITY */}
-            <div className="hidden sm:flex absolute -top-4 -right-4 z-20 items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900/90 border border-white/10 shadow-xl text-[11px] font-mono text-emerald-400 backdrop-blur-md animate-float-slow">
-              <Shield className="w-3 h-3 text-emerald-400" />
-              <span>&lt;SECURITY/&gt;</span>
-            </div>
-
-            <HeroPortraitVisual />
-          </div>
+        <div className="flex flex-wrap gap-2.5">
+          {specialties.map(({ label, icon: Icon }) => (
+            <span
+              key={label}
+              className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.025] px-3.5 py-2 text-xs text-zinc-300"
+            >
+              <Icon className="h-3.5 w-3.5 text-rose-300" aria-hidden="true" />
+              {label}
+            </span>
+          ))}
         </div>
+
+        <div className="flex flex-wrap items-center gap-3 pt-1">
+          <MagneticButton strength={0.16}>
+            <button
+              onClick={() => {
+                soundManager.playClick();
+                onViewWork();
+              }}
+              onMouseEnter={() => soundManager.playHover()}
+              className="group inline-flex items-center gap-2.5 rounded-xl bg-rose-600 px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.12em] text-white shadow-lg shadow-rose-950/30 transition-colors hover:bg-rose-500"
+            >
+              Explore my work
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </button>
+          </MagneticButton>
+          <MagneticButton strength={0.12}>
+            <button
+              onClick={() => {
+                soundManager.playClick();
+                onConnect();
+              }}
+              onMouseEnter={() => soundManager.playHover()}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.12em] text-zinc-200 transition-colors hover:border-white/20 hover:bg-white/[0.07]"
+            >
+              Let&apos;s connect
+            </button>
+          </MagneticButton>
+        </div>
+
+        <a
+          href="#about"
+          className="inline-flex items-center gap-2 pt-3 text-xs font-mono uppercase tracking-[0.16em] text-zinc-500 transition-colors hover:text-zinc-300"
+        >
+          Get to know me <ArrowDown className="h-3.5 w-3.5" />
+        </a>
       </div>
-    </section>
-  );
-};
 
+      <div className="relative z-10 mx-auto w-full max-w-[390px] lg:col-span-5 lg:max-w-[430px]">
+        <HeroPortraitVisual />
+      </div>
+    </div>
+  </section>
+);
