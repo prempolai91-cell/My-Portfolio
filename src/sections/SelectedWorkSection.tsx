@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { PROJECTS } from '../data/portfolioData';
 import { Project } from '../types/portfolio';
-import { ArrowUpRight, Github, Globe, Smartphone, Shield, Layers, X, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Github, Globe, Smartphone, Shield, Layers, X, Sparkles, Film, Eye } from 'lucide-react';
 import { ProjectVisualThumbnail } from '../components/visuals/ProjectVisuals';
 import { soundManager } from '../lib/audio';
 import { ScrollReveal } from '../components/motion/ScrollReveal';
@@ -12,6 +12,40 @@ interface SelectedWorkSectionProps {
 }
 
 type FilterCategory = 'All' | 'Web' | 'App' | 'Cybersecurity';
+type PreviewMode = 'motion' | 'architecture';
+
+interface MotionMediaSpec {
+  videoUrl: string;
+  zone: string;
+  study: string;
+}
+
+/**
+ * High-definition motion loop previews from AXON motion research,
+ * paired with Prem Polai's flagship software repositories.
+ */
+const PROJECT_MOTION_MEDIA: Record<string, MotionMediaSpec> = {
+  'netguard-android': {
+    videoUrl: 'https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/aaaf/oraciteslArea.mp4',
+    zone: 'Lattices / zone\nNetGuard Mobile / study',
+    study: 'Kernel sandbox\nAndroid security / loop',
+  },
+  'security-recon-hub': {
+    videoUrl: 'https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/aaaf/facet-glass-hero.mp4',
+    zone: 'Prism / shell\nConcurrent scanner / hub',
+    study: 'Dispersion hero\nNetwork recon / render',
+  },
+  'digital-forensic-lab': {
+    videoUrl: 'https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/aaaf/stellarmind-hero.mp4',
+    zone: 'Nebular / loop\nForensic extractor / lab',
+    study: 'Procedural hero\nArtifact recovery / sequence',
+  },
+  'creative-developer-portfolio': {
+    videoUrl: 'https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/aaaf/thedropthroughArea.mp4',
+    zone: 'Fall / forward\nMotion research / space',
+    study: 'Dolly track\nGPU particle system / study',
+  },
+};
 
 interface CategoryOption {
   id: FilterCategory;
@@ -49,6 +83,7 @@ const CATEGORY_OPTIONS: CategoryOption[] = [
 
 export const SelectedWorkSection: React.FC<SelectedWorkSectionProps> = ({ onSelectProject }) => {
   const [activeCategory, setActiveCategory] = useState<FilterCategory>('All');
+  const [previewMode, setPreviewMode] = useState<PreviewMode>('motion');
 
   const filteredProjects = useMemo(() => {
     if (activeCategory === 'All') return PROJECTS;
@@ -63,6 +98,11 @@ export const SelectedWorkSection: React.FC<SelectedWorkSectionProps> = ({ onSele
   const handleCategoryChange = (category: FilterCategory) => {
     soundManager.playClick();
     setActiveCategory(category);
+  };
+
+  const togglePreviewMode = (mode: PreviewMode) => {
+    soundManager.playClick();
+    setPreviewMode(mode);
   };
 
   return (
@@ -133,6 +173,34 @@ export const SelectedWorkSection: React.FC<SelectedWorkSectionProps> = ({ onSele
                     </button>
                   );
                 })}
+              </div>
+
+              {/* AXON-Style Preview Mode Switcher */}
+              <div className="flex items-center gap-1.5 p-1 rounded-xl bg-black/60 border border-white/10 backdrop-blur-md">
+                <button
+                  onClick={() => togglePreviewMode('motion')}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-mono text-[11px] uppercase tracking-wider transition-all ${
+                    previewMode === 'motion'
+                      ? 'bg-rose-600 text-white font-bold shadow-md shadow-rose-950/40'
+                      : 'text-zinc-400 hover:text-white'
+                  }`}
+                  title="View cinematic motion research loops (AXON effect)"
+                >
+                  <Film className="w-3.5 h-3.5 text-rose-300" />
+                  <span>MOTION LOOPS</span>
+                </button>
+                <button
+                  onClick={() => togglePreviewMode('architecture')}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-mono text-[11px] uppercase tracking-wider transition-all ${
+                    previewMode === 'architecture'
+                      ? 'bg-zinc-800 text-white font-bold shadow-md'
+                      : 'text-zinc-400 hover:text-white'
+                  }`}
+                  title="View technical mockups & architecture blueprints"
+                >
+                  <Eye className="w-3.5 h-3.5 text-zinc-300" />
+                  <span>BLUEPRINTS</span>
+                </button>
               </div>
 
               {/* Reset filter button if a specific category is active */}
@@ -264,53 +332,93 @@ export const SelectedWorkSection: React.FC<SelectedWorkSectionProps> = ({ onSele
                             isReversed ? 'lg:order-1' : 'lg:order-2'
                           }`}
                         >
-                          <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 group-hover:border-rose-500/40 group-hover:scale-[1.01] transition-all duration-500">
-                            <ProjectVisualThumbnail theme={project.visualTheme} />
+                          {previewMode === 'motion' && PROJECT_MOTION_MEDIA[project.id] ? (
+                            /* AXON Motion Research Video Card (.thumb + .meta layout) */
+                            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 group-hover:border-rose-500/40 group-hover:scale-[1.01] transition-all duration-500 bg-[#0a0a0a]">
+                              {/* .thumb: Video Cover Fitted Container */}
+                              <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-[#0a0a0a]">
+                                <video
+                                  src={PROJECT_MOTION_MEDIA[project.id].videoUrl}
+                                  autoPlay
+                                  muted
+                                  loop
+                                  playsInline
+                                  preload="metadata"
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
 
-                            {/* Top Corner Quick Spec Pill on Hover */}
-                            <div className="absolute top-3.5 right-3.5 z-20 opacity-0 group-hover:opacity-100 -translate-y-1 group-hover:translate-y-0 transition-all duration-300 pointer-events-none">
-                              <span className="px-2.5 py-1 rounded-lg bg-black/80 backdrop-blur-md border border-rose-500/40 font-mono text-[10px] text-rose-300 tracking-wider shadow-lg flex items-center gap-1.5">
-                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                                <span>QUICK SPEC</span>
-                              </span>
-                            </div>
-
-                            {/* Bottom Key Metrics & Tech Stack Hover Overlay */}
-                            <div className="absolute inset-x-0 bottom-0 z-20 p-4 md:p-5 bg-gradient-to-t from-black/95 via-[#080a0f]/90 to-transparent backdrop-blur-md border-t border-white/10 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out pointer-events-none">
-                              <div className="space-y-2.5">
-                                {/* Header Row: Project Type & Categories */}
-                                <div className="flex items-center justify-between text-[11px] font-mono">
-                                  <div className="flex items-center gap-2 text-zinc-300">
-                                    <span className="text-rose-400 font-bold">TYPE:</span>
-                                    <span className="uppercase tracking-wider font-medium">{project.category}</span>
-                                  </div>
-                                  <span className="text-[10px] text-zinc-400 uppercase tracking-widest hidden sm:inline">
-                                    [{project.filterCategories.join(' &bull; ')}]
-                                  </span>
+                                {/* Top Corner Live Stream Badge */}
+                                <div className="absolute top-3.5 left-3.5 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/80 backdrop-blur-md border border-white/10 font-mono text-[10px] text-zinc-300">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+                                  <span>MOTION CAPTURE // 60FPS</span>
                                 </div>
 
-                                {/* Tech Stack Row */}
-                                <div className="flex items-center gap-2 text-xs font-mono">
-                                  <span className="text-zinc-500 text-[10px] shrink-0 uppercase tracking-wider">STACK:</span>
-                                  <span className="text-zinc-200 font-medium truncate">
-                                    {project.technologies.slice(0, 4).join(' &bull; ')}
-                                  </span>
+                                <div className="absolute top-3.5 right-3.5 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/80 backdrop-blur-md border border-rose-500/40 font-mono text-[10px] text-rose-300">
+                                  <span>{project.number}</span>
                                 </div>
+                              </div>
 
-                                {/* Key Metrics Chips */}
-                                {project.caseStudy.metrics && project.caseStudy.metrics.length > 0 && (
-                                  <div className="grid grid-cols-3 gap-2 pt-2 border-t border-white/10 font-mono">
-                                    {project.caseStudy.metrics.map((m, mIdx) => (
-                                      <div key={mIdx} className="bg-zinc-900/80 rounded-lg p-1.5 px-2 border border-white/5">
-                                        <p className="text-[9px] text-zinc-500 uppercase tracking-wider truncate">{m.label}</p>
-                                        <p className="text-[11px] font-semibold text-rose-400 mt-0.5 truncate">{m.value}</p>
-                                      </div>
-                                    ))}
-                                  </div>
-                                )}
+                              {/* .meta: Two-column metadata with white-space: pre-line & 1px --line border */}
+                              <div className="p-4 border-t border-[#2a2a2a] bg-[#0c0d12]/95 flex justify-between items-start gap-4 text-xs font-mono">
+                                <div className="text-white font-medium whitespace-pre-line leading-relaxed">
+                                  {PROJECT_MOTION_MEDIA[project.id].zone}
+                                </div>
+                                <div className="text-[#8a8a8a] text-right whitespace-pre-line leading-relaxed">
+                                  {PROJECT_MOTION_MEDIA[project.id].study}
+                                </div>
                               </div>
                             </div>
-                          </div>
+                          ) : (
+                            /* Architecture Blueprint Visual */
+                            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 group-hover:border-rose-500/40 group-hover:scale-[1.01] transition-all duration-500">
+                              <ProjectVisualThumbnail theme={project.visualTheme} />
+
+                              {/* Top Corner Quick Spec Pill on Hover */}
+                              <div className="absolute top-3.5 right-3.5 z-20 opacity-0 group-hover:opacity-100 -translate-y-1 group-hover:translate-y-0 transition-all duration-300 pointer-events-none">
+                                <span className="px-2.5 py-1 rounded-lg bg-black/80 backdrop-blur-md border border-rose-500/40 font-mono text-[10px] text-rose-300 tracking-wider shadow-lg flex items-center gap-1.5">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                  <span>QUICK SPEC</span>
+                                </span>
+                              </div>
+
+                              {/* Bottom Key Metrics & Tech Stack Hover Overlay */}
+                              <div className="absolute inset-x-0 bottom-0 z-20 p-4 md:p-5 bg-gradient-to-t from-black/95 via-[#080a0f]/90 to-transparent backdrop-blur-md border-t border-white/10 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out pointer-events-none">
+                                <div className="space-y-2.5">
+                                  {/* Header Row: Project Type & Categories */}
+                                  <div className="flex items-center justify-between text-[11px] font-mono">
+                                    <div className="flex items-center gap-2 text-zinc-300">
+                                      <span className="text-rose-400 font-bold">TYPE:</span>
+                                      <span className="uppercase tracking-wider font-medium">{project.category}</span>
+                                    </div>
+                                    <span className="text-[10px] text-zinc-400 uppercase tracking-widest hidden sm:inline">
+                                      [{project.filterCategories.join(' &bull; ')}]
+                                    </span>
+                                  </div>
+
+                                  {/* Tech Stack Row */}
+                                  <div className="flex items-center gap-2 text-xs font-mono">
+                                    <span className="text-zinc-500 text-[10px] shrink-0 uppercase tracking-wider">STACK:</span>
+                                    <span className="text-zinc-200 font-medium truncate">
+                                      {project.technologies.slice(0, 4).join(' &bull; ')}
+                                    </span>
+                                  </div>
+
+                                  {/* Key Metrics Chips */}
+                                  {project.caseStudy.metrics && project.caseStudy.metrics.length > 0 && (
+                                    <div className="grid grid-cols-3 gap-2 pt-2 border-t border-white/10 font-mono">
+                                      {project.caseStudy.metrics.map((m, mIdx) => (
+                                        <div key={mIdx} className="bg-zinc-900/80 rounded-lg p-1.5 px-2 border border-white/5">
+                                          <p className="text-[9px] text-zinc-500 uppercase tracking-wider truncate">{m.label}</p>
+                                          <p className="text-[11px] font-semibold text-rose-400 mt-0.5 truncate">{m.value}</p>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </SpotlightCard>
